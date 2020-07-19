@@ -1,0 +1,27 @@
+server:
+    port: 8555
+
+spring:
+    application:
+        name: marathon-peremen-auth
+
+eureka:
+    client:
+        service-url:
+            defaultZone: http://eureka:8761/eureka
+
+
+auth:
+    server: auth:8555
+
+security:
+    oauth2:
+        client:
+            client-id: auth
+            client-secret: auth
+            access-token-uri: http://${auth.server}/oauth/token
+            scope: read,write
+            auto-approve-scopes: .*
+            user-authorization-uri: http://${auth.server}/oauth/authorize
+        authorization:
+            check-token-access: permitAll()
